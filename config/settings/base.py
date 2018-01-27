@@ -45,10 +45,10 @@ DJANGO_APPS = [
     'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [
-    'crispy_forms',  # Form layouts
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'rest_framework', # Rest framework
 ]
 
 # Apps specific for this project go here.
@@ -56,6 +56,7 @@ LOCAL_APPS = [
     # custom users app
     'instaclone.users.apps.UsersConfig',
     # Your stuff: custom apps go here
+    'instaclone.images.apps.ImagesConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -110,9 +111,22 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # Uses django-environ to accept uri format
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
+
+#DATABASES = {
+#    'default': env.db('DATABASE_URL', default='exires:///instaclone'),
+#}
+
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres:///instaclone'),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'instaclone',
+        'USER': 'sc',
+        'PASSWORD': '1',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
 }
+
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
