@@ -1,11 +1,28 @@
 from rest_framework import serializers
 from . import models
+from instaclone.users import models as user_models
+
+class feedUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = user_models.User
+        fields = (
+            'username',
+            'profile_image'
+        )
+
 
 class CommentSerializer(serializers.ModelSerializer):
 
+    creator = feedUserSerializer(read_only=True)
+
     class Meta:
         model = models.Comment
-        fields = '__all__'
+        fields = (
+            'id',
+            'message',
+            'creator'
+        )
 
 class LikeSerializer(serializers.ModelSerializer):
 
@@ -13,10 +30,11 @@ class LikeSerializer(serializers.ModelSerializer):
         model = models.Like
         fields = '__all__'
 
+
 class ImageSerializer(serializers.ModelSerializer):
 
     comments = CommentSerializer(many=True)
-    likes = LikeSerializer(many=True)
+    creator = feedUserSerializer()
 
     class Meta:
         model = models.Image
@@ -26,6 +44,7 @@ class ImageSerializer(serializers.ModelSerializer):
             'location',
             'caption',
             'comments',
-            'likes'
+            'like_count',
+            'creator'
         )
 
