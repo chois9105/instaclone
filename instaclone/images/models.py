@@ -1,6 +1,7 @@
 from django.db import models
 from instaclone.users import models as user_models
 from django.utils.encoding import python_2_unicode_compatible
+from taggit.managers import TaggableManager
 
 @python_2_unicode_compatible
 class TimeStampedModel(models.Model):
@@ -19,10 +20,14 @@ class Image(TimeStampedModel):
     location = models.CharField(max_length=140)
     caption = models.TextField(null=True)
     creator = models.ForeignKey(user_models.User, null=True, related_name='images')
+    tags = TaggableManager()
     
     @property
     def like_count(self):
         return self.likes.all().count()
+
+    def comment_count(self):
+        return self.comments.all().count()
 
     def __str__(self):
         return '{} - {}'.format(self.location, self.caption)
