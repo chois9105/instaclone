@@ -57,7 +57,8 @@ LOCAL_APPS = [
     # custom users app
     'instaclone.users.apps.UsersConfig',
     # Your stuff: custom apps go here
-    'instaclone.images.apps.ImagesConfig',
+    'instaclone.images.apps.ImagesConfig', # images app
+    'instaclone.notifications.apps.NotificationsConfig' # notification app
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
